@@ -13,10 +13,3 @@ module.exports = {
     readProducts
 };
 
-readProducts()
-    .then((products) => {
-        console.log(products);
-    })
-    .catch((err) => {
-        console.log(err);
-    });
