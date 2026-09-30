@@ -1,6 +1,7 @@
 const {
     getProducts,
-    getProductById
+    getProductById,
+     addProduct
 } = require("../services/productService");
 const { cache } = require("../middleware/cacheMiddleware");
 
@@ -34,7 +35,22 @@ async function getOneProduct(req, res) {
     }
 }
 
+async function createProduct(req, res) {
+    try {
+        const product = req.body;
+
+        const newProduct = await addProduct(product);
+
+        res.status(201).json(newProduct);
+    }
+    catch (err) {
+        console.log(err);
+        res.status(500).json({ message: "Internal server error" });
+    }
+}
+
 module.exports = {
     getAllProducts,
-    getOneProduct
+    getOneProduct,
+     createProduct
 };
