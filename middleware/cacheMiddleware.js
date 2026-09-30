@@ -3,13 +3,19 @@ const cache = {};
 function cacheMiddleware(req, res, next) {
     const key = req.url;
 
-    if (cache[key]) {
+if (cache[key]) {
+    const age = Date.now() - cache[key].createdAt;
+
+    if (age < 60 * 1000) {
         res.set("X-Cache", "HIT");
         return res.json(cache[key].value);
     }
 
-    res.set("X-Cache", "MISS");
-    next();
+    delete cache[key];
+}
+
+res.set("X-Cache", "MISS");
+next();
 }
 
 function clearCache() {

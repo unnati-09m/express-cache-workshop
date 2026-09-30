@@ -14,7 +14,11 @@ const {
 
 async function getAllProducts(req, res) {
     try {
+
+        const key = req.url;
         const products = await getProducts();
+        
+
 
         cache[key] = {
     value: products,
