@@ -7,7 +7,10 @@ const {
     deleteProduct
 } = require("../services/productService");
 
-const { cache } = require("../middleware/cacheMiddleware");
+const {
+    cache,
+    clearCache
+} = require("../middleware/cacheMiddleware");
 
 async function getAllProducts(req, res) {
     try {
@@ -50,6 +53,7 @@ async function createProduct(req, res) {
         const product = req.body;
 
         const newProduct = await addProduct(product);
+        clearCache();
 
         res.status(201).json(newProduct);
     }
@@ -70,6 +74,7 @@ async function editProduct(req, res) {
                 message: "Product not found"
             });
         }
+        clearCache();
 
         res.json(product);
     }
@@ -93,7 +98,8 @@ async function patchProductData(req, res) {
                 message: "Product not found"
             });
         }
-
+        
+        clearCache();
         res.json(product);
     }
     catch (err) {
@@ -114,6 +120,8 @@ async function removeProduct(req, res) {
                 message: "Product not found"
             });
         }
+
+        clearCache();
 
         res.json(product);
     }
