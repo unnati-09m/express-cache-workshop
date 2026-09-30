@@ -7,8 +7,11 @@ const {
     getOneProduct
 } = require("../controllers/productController");
 
-router.get("/products", getAllProducts);
 
-router.get("/products/:id", getOneProduct);
+const { cacheMiddleware } = require("../middleware/cacheMiddleware");
+
+router.get("/products", cacheMiddleware, getAllProducts);
+
+router.get("/products/:id", cacheMiddleware, getOneProduct);
 
 module.exports = router;

@@ -2,10 +2,13 @@ const {
     getProducts,
     getProductById
 } = require("../services/productService");
+const { cache } = require("../middleware/cacheMiddleware");
 
 async function getAllProducts(req, res) {
     try {
         const products = await getProducts();
+
+        cache[req.url] = products;
 
         res.json(products);
     }
@@ -20,6 +23,8 @@ async function getOneProduct(req, res) {
         const id = Number(req.params.id);
 
         const product = await getProductById(id);
+
+        cache[req.url] = product;
 
         res.json(product);
     }
