@@ -6,7 +6,8 @@ const {
     getAllProducts,
     getOneProduct,
     createProduct,
-    editProduct
+    editProduct,
+    patchProductData
 } = require("../controllers/productController");
 
 
@@ -18,5 +19,6 @@ router.get("/products/:id", cacheMiddleware, getOneProduct);
 
 router.post("/products", createProduct);
 router.put("/products/:id", editProduct);
+router.patch("/products/:id", patchProductData);
 
 module.exports = router;
