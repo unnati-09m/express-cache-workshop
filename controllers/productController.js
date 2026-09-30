@@ -3,7 +3,8 @@ const {
     getProductById,
     addProduct,
     updateProduct,
-    patchProduct
+    patchProduct,
+    deleteProduct
 } = require("../services/productService");
 
 const { cache } = require("../middleware/cacheMiddleware");
@@ -102,10 +103,32 @@ async function patchProductData(req, res) {
         });
     }
 }
+async function removeProduct(req, res) {
+    try {
+        const id = Number(req.params.id);
+
+        const product = await deleteProduct(id);
+
+        if (!product) {
+            return res.status(404).json({
+                message: "Product not found"
+            });
+        }
+
+        res.json(product);
+    }
+    catch (err) {
+        console.log(err);
+        res.status(500).json({
+            message: "Internal server error"
+        });
+    }
+}
 module.exports = {
     getAllProducts,
     getOneProduct,
      createProduct,
      editProduct,
-     patchProductData
+     patchProductData,
+     removeProduct
 };

@@ -7,7 +7,8 @@ const {
     getOneProduct,
     createProduct,
     editProduct,
-    patchProductData
+    patchProductData,
+    removeProduct
 } = require("../controllers/productController");
 
 
@@ -20,5 +21,6 @@ router.get("/products/:id", cacheMiddleware, getOneProduct);
 router.post("/products", createProduct);
 router.put("/products/:id", editProduct);
 router.patch("/products/:id", patchProductData);
+router.delete("/products/:id", removeProduct);
 
 module.exports = router;

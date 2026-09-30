@@ -56,10 +56,28 @@ async function patchProduct(id, updatedData) {
 
     return products[index];
 }
+async function deleteProduct(id) {
+    const products = await readProducts();
+
+    const index = products.findIndex((product) => product.id === id);
+
+    if (index === -1) {
+        return null;
+    }
+
+    const deletedProduct = products[index];
+
+    products.splice(index, 1);
+
+    await writeProducts(products);
+
+    return deletedProduct;
+}
 module.exports = {
     getProducts,
     getProductById,
     addProduct,
     updateProduct,
-    patchProduct
+    patchProduct,
+    deleteProduct
 };
